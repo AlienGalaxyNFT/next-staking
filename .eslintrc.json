@@ -4,9 +4,8 @@
         "es2021": true
     },
     "extends": [
-        "eslint:recommended",
         "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended"
+        "airbnb"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -21,7 +20,11 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "no-undef": "off",
-        "react/react-in-jsx-scope": "off"
+        "react/function-component-definition": "off",
+        "react/jsx-runtime": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-filename-extension": "off",
+        "react/jsx-props-no-spreading": "off",
+        "import/no-unresolved": "off"
     }
 }
