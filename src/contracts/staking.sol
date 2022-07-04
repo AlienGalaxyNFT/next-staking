@@ -93,14 +93,14 @@ contract Staking is Ownable {
     }
 
     //calculate the reward amount
-    uint256 reward = amount * percentage / 100;
+    uint256 reward = amount + amount * percentage / 100;
 
     //remove the stake from the balances mapping
     staked[_msgSender] -= amount;
 
     // transfer tokens to the staker
-    _msgSender.transfer(amount + reward);
-    emit Withdraw(_msgSender, amount);
+    _msgSender.transfer(reward);
+    emit Withdraw(_msgSender, reward);
   }
 
   function avaiableReward() public view returns (uint256) {
