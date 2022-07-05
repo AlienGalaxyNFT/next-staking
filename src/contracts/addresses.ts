@@ -1,2 +1,2 @@
-export const tokenAddress = '0xDe44C4b8544f3F0E238Cb2F92361a72F15058B98';
-export const stakingAddress = '0x88c040CD1Bba873e663c61941313c86C00257aA8';
+export const tokenAddress = '0x2d933176D1b74F96F3705F5f8713EEB0C45f0fb5';
+export const stakingAddress = '0x08C070F36df9D0eE8C9E1A6e4918425E16A91944';

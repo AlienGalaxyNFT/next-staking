@@ -15,15 +15,15 @@ export function Button({ value }: BoxButtonProps) {
 
   const { isAuthenticated, account } = useMoralis();
   const {
-    allowed, updateAllowed, updateStaked, updateBalance,
+    allowed, updateAvaiableReward, updateAllowed, updateStaked, updateBalance,
   } = useContext(userInfoContext);
 
   async function handleApprove(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (isAuthenticated) {
       const transaction: any = await approve();
-      const result = transaction.wait();
-      if (result) {
+      const result = await transaction.wait();
+      if (result.status === 1) {
         updateAllowed();
       }
     }
@@ -44,6 +44,11 @@ export function Button({ value }: BoxButtonProps) {
   async function handleClickOnWithdrawButton(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     await withdraw(account!);
+    setTimeout(() => {
+      updateStaked();
+      updateBalance();
+      updateAvaiableReward();
+    }, 20000);
   }
 
   if (pathname === '/') {

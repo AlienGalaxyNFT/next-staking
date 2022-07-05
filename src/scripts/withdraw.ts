@@ -4,12 +4,13 @@ import { stakingAddress } from '@/contracts/addresses';
 import ABI from '@/contracts/StakingAbi.json';
 
 export async function withdraw(address: string) {
+  console.log(address);
   const sendOptions = {
     contractAddress: stakingAddress,
     functionName: 'withdraw',
     abi: ABI,
     params: {
-      _msgSender: address,
+      msgSender: address,
     },
   };
   const transaction = await Moralis.executeFunction(sendOptions);

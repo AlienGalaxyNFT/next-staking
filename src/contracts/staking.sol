@@ -29,7 +29,7 @@ contract Staking is Ownable {
   }
 
   mapping(address => GroupStake[]) private _groupStakes;
-  mapping(address => uint256) public staked;
+  mapping(address => uint256) private staked;
   mapping(address => bool) public isStaker;
 
   event Deposit(address indexed staker, uint256 amount);
@@ -44,6 +44,14 @@ contract Staking is Ownable {
     minStake = _minStake;
     timelock = _timelock;
     percentage = _percent;
+  }
+
+  receive() external payable {
+    withdraw(payable(msg.sender));
+  }
+
+  fallback() external payable {
+    withdraw(payable(msg.sender));
   }
 
   function deposit(uint256 _amount) public {
@@ -74,21 +82,21 @@ contract Staking is Ownable {
     emit Deposit(msg.sender, _amount);
   }
 
-  function withdraw(address payable _msgSender) public payable {
+  function withdraw(address payable msgSender) public payable {
     require(paused != true, "Error: Contract is paused");
-    require(isStaker[_msgSender], "Error: Staker is not staking");
-    require(staked[_msgSender] > 0, "Error: Staker has no tokens to withdraw");
-    require(msg.sender == _msgSender, "Error: Only staker can withdraw");
+    require(isStaker[msgSender], "Error: Staker is not staking");
+    require(staked[msgSender] > 0, "Error: Staker has no tokens to withdraw");
+    require(msg.sender == msgSender, "Error: Only staker can withdraw");
 
     uint256 amount;
 
-    for (uint256 i = 0; i < _groupStakes[_msgSender].length; i++) {
-      GroupStake memory stake = _groupStakes[_msgSender][i];
+    for (uint256 i = 0; i < _groupStakes[msgSender].length; i++) {
+      GroupStake memory stake = _groupStakes[msgSender][i];
       
       if(stake.depositedAt + timelock <= block.timestamp) {
         amount = stake.amount;
 
-        delete _groupStakes[_msgSender][i];
+        delete _groupStakes[msgSender][i];
       }
     }
 
@@ -96,11 +104,11 @@ contract Staking is Ownable {
     uint256 reward = amount + amount * percentage / 100;
 
     //remove the stake from the balances mapping
-    staked[_msgSender] -= amount;
+    staked[msgSender] -= amount;
 
     // transfer tokens to the staker
-    _msgSender.transfer(reward);
-    emit Withdraw(_msgSender, reward);
+    token.transfer(msgSender, reward);
+    emit Withdraw(msgSender, reward);
   }
 
   function avaiableReward() public view returns (uint256) {
@@ -145,5 +153,9 @@ contract Staking is Ownable {
   function changeTimelock(uint256 _timelock) public onlyOwner {
     require(_timelock > 0, "Error: Timelock must be greater than 0");
     timelock = _timelock;
+  }
+
+  function stakedAmount(address owner) public view returns (uint256) {
+    return staked[owner];
   }
 }

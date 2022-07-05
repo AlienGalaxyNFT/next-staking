@@ -15,6 +15,7 @@ interface UserInfoContextProps {
   updateAllowed: () => void;
   updateBalance: () => void;
   updateStaked: () => void;
+  updateAvaiableReward: () => void;
 }
 
 export const userInfoContext = createContext<UserInfoContextProps>({} as UserInfoContextProps);
@@ -61,6 +62,11 @@ export function UserInfoProvider({ children }: UserInfoProviderProps) {
       .then((value) => setStakedAmount(value));
   }
 
+  function updateAvaiableReward() {
+    avaiableReward()
+      .then((value) => setAvaiableRewardAmount(value));
+  }
+
   return (
     <userInfoContext.Provider value={{
       allowed,
@@ -70,6 +76,7 @@ export function UserInfoProvider({ children }: UserInfoProviderProps) {
       updateAllowed,
       updateBalance,
       updateStaked,
+      updateAvaiableReward,
     }}
     >
       {children}
