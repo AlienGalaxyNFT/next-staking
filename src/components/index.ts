@@ -6,3 +6,4 @@ export * from '@/components/BoxStakingContentForm';
 export * from '@/components/BoxStakingContentHeader';
 export * from '@/components/BoxStakingContentInfo';
 export * from '@/components/Button';
+export * from '@/components/Connect';

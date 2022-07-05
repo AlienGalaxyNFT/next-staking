@@ -12,7 +12,7 @@ export function ActiveLink({ children, activeClassName, ...props }: ActiveLinkPr
 
   const className = asPath === props.href
     ? activeClassName
-    : 'font-bold text-md text-gray-50 py-14 px-12';
+    : 'font-bold text-base text-gray-50 py-4 px-12';
 
   return (
     <Link {...props}>
