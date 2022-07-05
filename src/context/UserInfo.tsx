@@ -6,6 +6,7 @@ import { allowance } from '@/scripts/allowance';
 import { balanceOf } from '@/scripts/balance';
 import { avaiableReward } from '@/scripts/avaiable-reward';
 import { staked } from '@/scripts/staked';
+import { useRouter } from 'next/router';
 
 interface UserInfoContextProps {
   allowed: number;
@@ -25,6 +26,7 @@ interface UserInfoProviderProps {
 }
 
 export function UserInfoProvider({ children }: UserInfoProviderProps) {
+  const { pathname } = useRouter();
   const { isAuthenticated, account, isWeb3Enabled } = useMoralis();
   const [allowed, setAllowed] = useState(0);
   const [balance, setBalance] = useState(0);
@@ -45,7 +47,7 @@ export function UserInfoProvider({ children }: UserInfoProviderProps) {
       staked(account!)
         .then((value) => setStakedAmount(value));
     }
-  }, [isAuthenticated, account]);
+  }, [isAuthenticated, account, pathname]);
 
   function updateAllowed() {
     allowance(account!)
