@@ -15,13 +15,14 @@ const Stake: NextPage = () => (
   <>
     <NextSeo
       title="Alien Galaxy - Unstake"
+      description='Alien Galaxy NFT Game - Play to Earn $Gali and exchange for Dollar. Have fun playing the best NFT game. Mine the $Gali cryptocurrency token and exchange it for USD. Join Now Whitelist. Play to earn. Staking'
     />
     <div className="flex items-center justify-center w-screen h-screen">
       <Connect />
       <BoxStakingBackground>
         <div className="w-full bg-gray-600 rounded-lg p-5">
           <header className="flex flex-row items-center justify-center pb-5">
-            <Image src={LogoImage} width={40} height={40} className="items-start" />
+            <Image alt='Alien Galaxy Logo' src={LogoImage} width={40} height={40} className="items-start" />
             <span className="text-2xl font-bold w-full flex justify-center">UNSTAKING</span>
           </header>
           <BoxStakingContent>
